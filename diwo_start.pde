@@ -7,13 +7,18 @@ int size = 40;
 int amount_x = 1;
 int amount_y = 1;
 
+boolean light = false;
+
+boolean debug = true;
+
 void setup() {
   // Setup MidiBus
-  // MidiBus.list();
-  // myBus = new MidiBus(this, 0, "LPD8");
+  MidiBus.list();
+  myBus = new MidiBus(this, "LPD8", "LPD8");
   
   //Setup Fullscreen, P2D
-  fullScreen(P2D);
+  size(640, 480, P2D);
+  //fullScreen(P2D);
 }
 
 void draw() {
@@ -41,22 +46,28 @@ void draw() {
 // Test Functions for Midi-Controller Knobs and Buttons
 void noteOn(int channel, int pitch, int velocity) {
   // Receive a noteOn
-  println();
-  println("Note On:");
-  println("--------");
-  println("Channel:"+channel);
-  println("Pitch:"+pitch);
-  println("Velocity:"+velocity);
+  if(debug) {
+    println();
+    println("Note On:");
+    println("--------");
+    println("Channel:"+channel);
+    println("Pitch:"+pitch);
+    println("Velocity:"+velocity);
+  }
+  
+  // setLight();
 }
 
 void controllerChange(int channel, int number, int value) {
   // Receive a controllerChange
-  println();
-  println("Controller Change:");
-  println("--------");
-  println("Channel:"+channel);
-  println("Number:"+number);
-  println("Value:"+value);
+  if(debug) {
+    println();
+    println("Controller Change:");
+    println("--------");
+    println("Channel:"+channel);
+    println("Number:"+number);
+    println("Value:"+value);
+  }
 }
 
 
@@ -71,7 +82,8 @@ void controllerChange(int channel, int number, int value) {
 //  } 
 //}
 
-void delay(int time) {
-  int current = millis();
-  while (millis () < current+time) Thread.yield();
-}
+//void setLight() {
+//   int value = light ? 0 : 127;
+//   myBus.sendNoteOn(0, 40, value) ;
+//   light = !light;
+//}
